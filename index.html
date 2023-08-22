@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grid Game</title>
+    <title>Racing Game</title>
   </head>
   <body>
     <canvas id="gameCanvas" width="800" height="600"></canvas>
@@ -22,11 +22,6 @@
       let brickGrid = new Array(BRICK_COLS * BRICK_ROWS);
       let bricksLeft = 0;
 
-      const PADDLE_WIDTH = 100;
-      const PADDLE_THICKNESS = 10;
-      const PADDLE_DIST_FROM_EDGE = 60;
-      let paddleX = 400;
-
       let canvas, canvasContext;
 
       let mouseX = 0;
@@ -38,8 +33,6 @@
 
         mouseX = evt.clientX - rect.left - root.scrollLeft;
         mouseY = evt.clientY - rect.top - root.scrollTop;
-
-        paddleX = mouseX - PADDLE_WIDTH / 2;
 
         // cheat / hack to test ball in any position
         // ballX = mouseX;
@@ -163,35 +156,10 @@
         } // end of valid col and row
       } // end of ballBrickHandling function
 
-      function ballPaddleHandling() {
-        let paddleTopEdgeY = canvas.height - PADDLE_DIST_FROM_EDGE;
-        let paddleBottomEdgeY = paddleTopEdgeY + PADDLE_THICKNESS;
-        let paddleLeftEdgeX = paddleX;
-        let paddleRightEdgeX = paddleLeftEdgeX + PADDLE_WIDTH;
-        if (
-          ballY > paddleTopEdgeY && // below the top of paddle
-          ballY < paddleBottomEdgeY && // above bottom of paddle
-          ballX > paddleLeftEdgeX && // right of the left side of paddle
-          ballX < paddleRightEdgeX // right of the left side of paddle
-        ) {
-          ballSpeedY *= -1;
-
-          let centerOfPaddleX = paddleX + PADDLE_WIDTH / 2;
-          let ballDistFromPaddleCenterX = ballX - centerOfPaddleX;
-          ballSpeedX = ballDistFromPaddleCenterX * 0.35;
-
-          if (bricksLeft == 0) {
-            brickReset();
-          } // out of bricks
-        } // ball center island paddle
-      } // end of ballPaddleHandling
-
       function moveAll() {
         ballMove();
 
         ballBrickHandling();
-
-        ballPaddleHandling();
       }
 
       function rowColToArrayIndex(col, row) {
@@ -222,14 +190,6 @@
 
         //draw ball
         colorCircle(ballX, ballY, 10, "white");
-
-        colorRect(
-          paddleX,
-          canvas.height - PADDLE_DIST_FROM_EDGE,
-          PADDLE_WIDTH,
-          PADDLE_THICKNESS,
-          "white"
-        );
 
         drawBricks();
       }
