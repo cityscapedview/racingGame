@@ -14,6 +14,7 @@
 
       let carX = 75;
       let carY = 75;
+      let carAng = 0;
       let carSpeedX = 5;
       let carSpeedY = 7;
 
@@ -94,8 +95,9 @@
       }
 
       function carMove() {
-        carX += carSpeedX;
-        carY += carSpeedY;
+        // carX += carSpeedX;
+        // carY += carSpeedY;
+        carAng += 0.02;
 
         if (carX < 0 && carSpeedX < 0.0) {
           //left
@@ -201,14 +203,22 @@
         //draw car
         // colorCircle(carX, carY, 10, "white");
         if (carPicLoaded) {
-          canvasContext.drawImage(
-            carPic,
-            carX - carPic.width / 2,
-            carY - carPic.height / 2
-          );
+          drawBitmapWithRotation(carPic, carX, carY, carAng);
         }
 
         drawTracks();
+      }
+
+      function drawBitmapWithRotation(useBitmap, atX, atY, withAng) {
+        canvasContext.save();
+        canvasContext.translate(atX, atY);
+        canvasContext.rotate(withAng);
+        canvasContext.drawImage(
+          useBitmap,
+          -useBitmap.width / 2,
+          -useBitmap.height / 2
+        );
+        canvasContext.restore();
       }
 
       function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
