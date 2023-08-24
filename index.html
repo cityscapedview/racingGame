@@ -15,7 +15,7 @@
       let carX = 75;
       let carY = 75;
       let carAng = 0;
-      let carSpeed = 2;
+      let carSpeed = 0;
 
       const TRACK_W = 40;
       const TRACK_H = 40;
@@ -45,6 +45,11 @@
       const KEY_RIGHT_ARROW = 39;
       const KEY_DOWN_ARROW = 40;
 
+      let keyHeld_Gas = false;
+      let keyHeld_Reverse = false;
+      let keyHeld_TurnLeft = false;
+      let keyHeld_TurnRight = false;
+
       let mouseX = 0;
       let mouseY = 0;
 
@@ -65,22 +70,32 @@
       function keyPressed(evt) {
         // console.log("evt.keyCode");
         if (evt.keyCode == KEY_LEFT_ARROW) {
-          carAng -= 0.5;
+          keyHeld_TurnLeft = true;
         }
         if (evt.keyCode == KEY_RIGHT_ARROW) {
-          carAng += 0.5;
+          keyHeld_TurnRight = true;
         }
         if (evt.keyCode == KEY_UP_ARROW) {
-          carSpeed += 0.5;
+          keyHeld_Gas = true;
         }
         if (evt.keyCode == KEY_DOWN_ARROW) {
-          carSpeed -= 0.5;
+          keyHeld_Reverse = true;
         }
-        evt.preventDefault();
       }
 
       function keyReleased(evt) {
-        console.log("evt.keyCode");
+        if (evt.keyCode == KEY_LEFT_ARROW) {
+          keyHeld_TurnLeft = false;
+        }
+        if (evt.keyCode == KEY_RIGHT_ARROW) {
+          keyHeld_TurnRight = false;
+        }
+        if (evt.keyCode == KEY_UP_ARROW) {
+          keyHeld_Gas = false;
+        }
+        if (evt.keyCode == KEY_DOWN_ARROW) {
+          keyHeld_Reverse = false;
+        }
       }
 
       window.onload = function () {
@@ -123,6 +138,19 @@
       }
 
       function carMove() {
+        if (keyHeld_Gas) {
+          carSpeed += 0.2;
+        }
+        if (keyHeld_Reverse) {
+          carSpeed -= 0.2;
+        }
+        if (keyHeld_TurnLeft) {
+          carAng -= 0.04;
+        }
+        if (keyHeld_TurnRight) {
+          carAng += 0.04;
+        }
+
         carX += Math.cos(carAng) * carSpeed;
         carY += Math.sin(carAng) * carSpeed;
       }
