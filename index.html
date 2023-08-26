@@ -43,6 +43,10 @@
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       ];
 
+      const TRACK_ROAD = 0;
+      const TRACK_WALL = 1;
+      const TRACK_PLAYERSTART = 2;
+
       let canvas, canvasContext;
 
       const KEY_LEFT_ARROW = 37;
@@ -133,8 +137,8 @@
           for (let eachCol = 0; eachCol < TRACK_COLS; eachCol++) {
             var arrayIndex = rowColToArrayIndex(eachCol, eachRow);
 
-            if (trackGrid[arrayIndex] == 2) {
-              trackGrid[arrayIndex] = 0;
+            if (trackGrid[arrayIndex] == TRACK_PLAYERSTART) {
+              trackGrid[arrayIndex] = TRACK_ROAD;
               carAng = -Math.PI / 2;
               carX = eachCol * TRACK_W + TRACK_W / 2;
               carY = eachRow * TRACK_H + TRACK_H / 2;
@@ -162,10 +166,10 @@
         carY += Math.sin(carAng) * carSpeed;
       }
 
-      function isTrackAtColRow(col, row) {
+      function isWallAtColRow(col, row) {
         if (col >= 0 && col < TRACK_COLS && row >= 0 && row < TRACK_ROWS) {
           let trackIndexUnderCoord = rowColToArrayIndex(col, row);
-          return trackGrid[trackIndexUnderCoord] == 1;
+          return trackGrid[trackIndexUnderCoord] == TRACK_WALL;
         } else {
           return false;
         }
@@ -182,7 +186,7 @@
           carTrackRow >= 0 &&
           carTrackRow < TRACK_ROWS
         ) {
-          if (isTrackAtColRow(carTrackCol, carTrackRow)) {
+          if (isWallAtColRow(carTrackCol, carTrackRow)) {
             carX -= Math.cos(carAng) * carSpeed;
             carY -= Math.sin(carAng) * carSpeed;
 
@@ -206,7 +210,7 @@
           for (let eachCol = 0; eachCol < TRACK_COLS; eachCol++) {
             var arrayIndex = rowColToArrayIndex(eachCol, eachRow);
 
-            if (trackGrid[arrayIndex] == 1) {
+            if (trackGrid[arrayIndex] == TRACK_WALL) {
               colorRect(
                 TRACK_W * eachCol,
                 TRACK_H * eachRow,
