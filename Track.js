@@ -27,7 +27,7 @@ const TRACK_PLAYERSTART = 2;
 
 function trackLoadImages() {
   roadPic.src = "track.png";
-  wallPic.src = "building.png";
+  wallPic.src = "singleBuilding.png";
 }
 
 function isWallAtColRow(col, row) {
