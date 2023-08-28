@@ -1,6 +1,3 @@
-let roadPic = document.createElement("img");
-let wallPic = document.createElement("img");
-
 const TRACK_W = 40;
 const TRACK_H = 40;
 const TRACK_GAP = 2;
@@ -24,11 +21,6 @@ let trackGrid = [
 const TRACK_ROAD = 0;
 const TRACK_WALL = 1;
 const TRACK_PLAYERSTART = 2;
-
-function trackLoadImages() {
-  roadPic.src = "track.png";
-  wallPic.src = "singleBuilding.png";
-}
 
 function isWallAtColRow(col, row) {
   if (col >= 0 && col < TRACK_COLS && row >= 0 && row < TRACK_ROWS) {
