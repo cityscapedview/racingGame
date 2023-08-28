@@ -21,13 +21,7 @@ function moveAll() {
   carTrackHandling();
 }
 
-function clearScreen() {
-  //clear screen
-  colorRect(0, 0, canvas.width, canvas.height, "black");
-}
-
 function drawAll() {
-  clearScreen();
   drawTracks();
   carDraw();
 }
